@@ -82,3 +82,29 @@ def strategy_performance(asset_returns, weights, dates):
     std = portfolio_returns.std() * np.sqrt(252)
     sharpe = mean/std
     return portfolio_returns, mean.iloc[0], std.iloc[0], sharpe.iloc[0]
+
+def MA_strategy(asset_returns, lower_period, upper_period):
+    '''
+    asset_returns: dataframe with the returns of a single asset
+    lower_period: lower moving average period
+    upper_period: upper moving average period
+
+    Returns the strategy's performance
+    '''
+    num_periods = len(asset_returns)
+    weights = []
+    for i in range(upper_period, num_periods):
+        lower_ma = (asset_returns.iloc[i-lower_period:i-1]+1).cumprod().iloc[0]
+        upper_ma = (asset_returns.iloc[i-upper_period:i-1]+1).cumprod().iloc[0]
+        diff = lower_ma - upper_ma
+        if diff > 0:
+            weights.append(1)
+        else:
+            weights.append(0)
+    result = asset_returns[upper_period:].copy()
+    result['Weight'] = weights
+    result['Return'] = result['Weight'] * asset_returns[upper_period:]
+    mean = result['Return'].mean() * 252
+    std = result['Return'].std() * np.sqrt(252)
+    sharpe = mean/std
+    return result, mean, std, sharpe
