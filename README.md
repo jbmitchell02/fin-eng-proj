@@ -1,6 +1,6 @@
 # Algorithmic Trading Strategies
 
-Mitch Mitchell [jbm8efn@virginia.edu](jbm8efn@virginia.edu)
+Mitch Mitchell [jbm8efn@virginia.edu](mailto:jbm8efn@virginia.edu)
 
 * [functions.py](functions.py): Contains functions developed in the earlier sections of this project.
 * [prelim_analysis.ipynb](prelim_analysis.ipynb): Preliminary analysis on the returns of the ETF's we'll be using and the efficient frontier they create.
